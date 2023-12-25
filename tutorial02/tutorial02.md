@@ -69,3 +69,20 @@ TEST_ERROR(ZYH_PARSE_ROOT_NOT_SINGULAR, "0x123");
 ```
 
 >练习二主要写一个检测JSON数字语法的函数
+
+---
+
+##### 4 strtod函数
+
+函数的作用是将字符串中的数字部分转换为对应的浮点数，并将剩余的部分存储在 endptr 指向的地址中。
+如果转换成功，则返回转换后的浮点数值；
+如果转换失败（例如字符串不是有效的数字格式），则返回0.0。
+
+```c++
+	v->u.n = strtod(c->json, &end);	//字符串转为double
+	if ((v->u.n == HUGE_VAL || v->u.n == -HUGE_VAL))
+		return ZYH_PARSE_NUMBER_TOO_BIG;
+	c->json = p;	//end指向JSON待解析字符串
+	v->type = ZYH_NUMBER;
+```
+
