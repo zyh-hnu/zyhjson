@@ -439,5 +439,29 @@ typedef struct {
 
 ---
 
+##### 9 个人总结
 
+本单元完成了
+
+- 对于字符串的处理，首先使用堆空间作为字符串的缓冲区，识别到 "\\"" 后弹栈，并将解析后的结果放置 v中的union字符串成员中保存
+
+![union_layout](tutorial03/union_layout.png)
+
+- 对于栈的分配：使用结构体，设置`size_t size`、`size_t top`、`char* stack`变量
+
+```c
+typedef struct {
+	const char* json;
+	char* stack;	//设置一个指向字符数组的指针stack
+	size_t size;	//设置栈大小，size_t
+	size_t top;		//设置栈顶，size_t
+}zyh_context;
+```
+
+对于首次初始化栈，分配栈空间为 `256`，栈空间不足则进行 再分配`realloc`的操作，其中`realloc`函数具体见 8，设置 `size` 和 `top` 对于栈空间进行描述
+
+- 解析成功后释放栈空间，并使指向栈空间的指针赋值为`NULL`，避免成为野指针。使用 `memcpy(s1,s2,len)`函数进行`copy`操作
+- 分别对字符串中的 `" \ \0` 双引号、转义字符、\0与 0 至 31的字符。
+
+- 对于报错进行处理和修改，了解了`size_t`、`realloc`、`void*`、`free`。
 
