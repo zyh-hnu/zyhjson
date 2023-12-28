@@ -188,15 +188,15 @@ static void zyh_encode_utf8(zyh_context* c, unsigned u)
 ```c++
 if (u >= 0xD800 && u <= 0xDBFF)
 {
-				if (*p++!= '\\')
-					STRING_ERROR(ZYH_PARSE_INVALID_UNICODE_SURROGATE);
-				if (*p++!= 'u')
-					STRING_ERROR(ZYH_PARSE_INVALID_UNICODE_SURROGATE);
-				if (!(p = zyh_parse_hex4(p, &u2)))
-					STRING_ERROR(ZYH_PARSE_INVALID_UNICODE_HEX);
-				if (u2 < 0xDC00 || u2>0xDFFF)
-					STRING_ERROR(ZYH_PARSE_INVALID_UNICODE_SURROGATE);
-				u = 0x10000+((u - 0xD800)<<10)|(u2 - 0xDC00);
+    if (*p++!= '\\')
+        STRING_ERROR(ZYH_PARSE_INVALID_UNICODE_SURROGATE);
+    if (*p++!= 'u')
+        STRING_ERROR(ZYH_PARSE_INVALID_UNICODE_SURROGATE);
+    if (!(p = zyh_parse_hex4(p, &u2)))
+        STRING_ERROR(ZYH_PARSE_INVALID_UNICODE_HEX);
+    if (u2 < 0xDC00 || u2>0xDFFF)
+        STRING_ERROR(ZYH_PARSE_INVALID_UNICODE_SURROGATE);
+    u = 0x10000+((u - 0xD800)<<10)|(u2 - 0xDC00);
 }
 ```
 
